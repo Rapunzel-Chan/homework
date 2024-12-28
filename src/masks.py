@@ -1,15 +1,13 @@
-def get_mask_card_number(card_number: int) -> str:
+def get_mask_card_number(card_number: str) -> str:
     """Функция маскирует номера банковской карты"""
-    str_card_number = str(card_number)
-    return f"{str_card_number[0:4]} {str_card_number[4:6]}** **** {str_card_number[-4:]}"
+    return f"{card_number[:-17]}{card_number[-17:-12]} {card_number[-12:-10]}** **** {card_number[-4:]}"
 
 
-def get_mask_account(account_number: int) -> str:
+def get_mask_account(account_number: str) -> str:
     """Функция маскирует номера банковского счета"""
-    str_account_number = str(account_number)
-    return f"**{str_account_number[-4:]}"
-
+    return f"Счет **{account_number[-4:]}"
 
 if __name__ == '__main__':
-    print(get_mask_card_number(7000792289606361))
-    print(get_mask_account(73654108430135874305))
+    print(get_mask_card_number('Maestro 1596837868705199'))
+    print(get_mask_card_number('Visa Classic 6831982476737658'))
+    print(get_mask_account('Счет 73654108430135874305'))
