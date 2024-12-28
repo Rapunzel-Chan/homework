@@ -7,6 +7,7 @@ def get_mask_account(account_number: str) -> str:
     """Функция маскирует номера банковского счета"""
     return f"Счет **{account_number[-4:]}"
 
+
 if __name__ == '__main__':
     print(get_mask_card_number('Maestro 1596837868705199'))
     print(get_mask_card_number('Visa Classic 6831982476737658'))
