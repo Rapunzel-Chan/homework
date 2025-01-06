@@ -1,5 +1,5 @@
 def filter_by_state(bank_operations: list, state: str = 'EXECUTED') -> list:
-    """Функция возвращает список словарей, отфильтрованных по заданному параметру"""
+    """Функция возвращает список словарей, отсортированных по заданному параметру"""
     filtered_id_state = []
     for operation in bank_operations:
         if operation['state'] == state:
@@ -8,7 +8,7 @@ def filter_by_state(bank_operations: list, state: str = 'EXECUTED') -> list:
 
 
 def sort_by_date(bank_operations: list, reverse: bool = True) -> list:
-    """Функция возвращает список словарей, отфильтрованных по дате"""
+    """Функция возвращает список словарей, отсортированных по дате"""
     filtered_id_date = sorted(bank_operations, key=lambda operation: operation["date"], reverse=reverse)
     return filtered_id_date
 
