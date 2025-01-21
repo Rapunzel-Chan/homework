@@ -16,8 +16,8 @@ def get_data(release_data: str) -> str:
     day = release_data[8:10]
     month = release_data[5:7]
     year = release_data[0:4]
-    if day.isdigit() == True and month.isdigit() == True and year.isdigit() == True:
+    if day.isdigit() and month.isdigit() and year.isdigit():
         if 1 <= int(day) <= 31 and 1 <= int(month) <= 12 and 1900 <= int(year) <= 2025:
             return f"{release_data[8:10]}.{release_data[5:7]}.{release_data[0:4]}"
-    else:
-        raise ValueError("Неверная дата")
+        else:
+            raise ValueError("Неверная дата")
