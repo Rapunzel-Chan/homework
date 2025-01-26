@@ -13,11 +13,11 @@ def get_mask_account_card(account_card: str) -> str:
 
 def get_data(release_data: str) -> str:
     """Функция возвращает дату выпуска"""
-    return f"{release_data[8:10]}.{release_data[5:7]}.{release_data[0:4]}"
-
-
-if __name__ == '__main__':
-    print(get_mask_account_card('Maestro 1596837868705199'))
-    print(get_mask_account_card('Visa Classic 6831982476737658'))
-    print(get_mask_account_card('Счет 73654108430135874305'))
-    print(get_data('2024-03-11T02:26:18.671407'))
+    day = release_data[8:10]
+    month = release_data[5:7]
+    year = release_data[0:4]
+    if day.isdigit() and month.isdigit() and year.isdigit():
+        if 1 <= int(day) <= 31 and 1 <= int(month) <= 12 and 1900 <= int(year) <= 2025:
+            return f"{release_data[8:10]}.{release_data[5:7]}.{release_data[0:4]}"
+        else:
+            raise ValueError("Неверная дата")
