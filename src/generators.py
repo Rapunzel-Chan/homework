@@ -1,16 +1,35 @@
-import pytest
+from typing import Iterator
 
-@pytest.fixture
-def data():
-    return [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-            {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-            {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-            {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
-            ]
+def filter_by_currency(transactions: list, currency: str) -> Iterator:
+    """
+    Функция возвращает итератор,
+    который поочередно выдает транзакции,
+    где валюта операции соответствует заданной
+    """
+    for transaction in transactions:
+        if transaction['operationAmount']['currency']['code'] == currency:
+            yield transaction
 
-@pytest.fixture
-def transactions():
-    return ([
+
+def transaction_descriptions(transactions: list) -> Iterator:
+    """Функция возвращает описание каждой операции по очереди"""
+    for transaction in transactions:
+        if 'description' in transaction:
+            yield transaction['description']
+
+def card_number_generator(start: int, stop: int) -> Iterator:
+    """Функция выдает номера банковских карт в формате XXXX XXXX XXXX XXXX"""
+    for num in range(start, stop + 1):
+        nulls = 16
+        nulls -= len(str(num))
+        result = "0" * nulls + str(num)
+        if '0000000000000001' <= result <= '9999999999999999':
+            card_number = f"{result[:-17]}{result[-17:-12]} {result[-12:-8]} {result[-8:-4]} {result[-4:]}"
+            yield card_number
+
+
+if __name__ == '__main__':
+    transactions = ([
            {
             "id": 939719570,
             "state": "EXECUTED",
@@ -87,3 +106,14 @@ def transactions():
             "to": "Счет 14211924144426031657"
             }
             ])
+    usd_transactions = filter_by_currency(transactions, "USD")
+    for _ in range(2):
+        print(next(usd_transactions))
+
+    descriptions = transaction_descriptions(transactions)
+    for _ in range(5):
+        print(next(descriptions))
+
+    for card_number in card_number_generator(1, 5):
+        print(card_number)
+
