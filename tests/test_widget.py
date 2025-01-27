@@ -12,7 +12,7 @@ def test_get_mask_account_card(card_account, expected):
     assert get_mask_account_card(card_account) == expected
 
 
-def test_get_mask_account_card_wrong_card_number()-> None:
+def test_get_mask_account_card_wrong_card_number() -> None:
     with pytest.raises(ValueError):
         get_mask_account_card('MasterCard 1787763705147')
 
