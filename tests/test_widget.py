@@ -38,4 +38,4 @@ def test_get_data():
 
 def test_get_data_wrong():
     with pytest.raises(ValueError):
-        get_data('')
+        get_data(' ')

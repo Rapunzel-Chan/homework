@@ -13,6 +13,8 @@ def get_mask_account_card(account_card: str) -> str:
 
 def get_data(release_data: str) -> str:
     """Функция возвращает дату выпуска"""
+    if len(release_data) < 26:
+        raise ValueError("Неверный формат даты")
     day = release_data[8:10]
     month = release_data[5:7]
     year = release_data[0:4]
