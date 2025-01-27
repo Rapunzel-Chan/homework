@@ -6,9 +6,15 @@ def filter_by_currency(transactions: list, currency: str) -> Iterator:
     который поочередно выдает транзакции,
     где валюта операции соответствует заданной
     """
-    for transaction in transactions:
-        if transaction['operationAmount']['currency']['code'] == currency:
-            yield transaction
+    if [] == transactions:
+        raise ValueError('Список пуст')
+    if currency != 'USD' and currency != 'RUB':
+        raise ValueError('Нет словаря для такой валюты')
+    else:
+        for transaction in transactions:
+            if transaction['operationAmount']['currency']['code'] == currency:
+                yield transaction
+
 
 
 def transaction_descriptions(transactions: list) -> Iterator:
@@ -23,13 +29,13 @@ def card_number_generator(start: int, stop: int) -> Iterator:
         nulls = 16
         nulls -= len(str(num))
         result = "0" * nulls + str(num)
-        if '0000000000000001' <= result <= '9999999999999999':
+        if len(result) == 16 and '0000000000000001' <= result <= '9999999999999999':
             card_number = f"{result[:-17]}{result[-17:-12]} {result[-12:-8]} {result[-8:-4]} {result[-4:]}"
             yield card_number
+        else:
+                raise ValueError('Номер карты вне диапазона')
 
-
-if __name__ == '__main__':
-    transactions = ([
+transactions = ([
            {
             "id": 939719570,
             "state": "EXECUTED",
@@ -106,14 +112,18 @@ if __name__ == '__main__':
             "to": "Счет 14211924144426031657"
             }
             ])
-    usd_transactions = filter_by_currency(transactions, "USD")
-    for _ in range(2):
+
+usd_transactions = filter_by_currency(transactions, "USD")
+while True:
+    try:
         print(next(usd_transactions))
+    except StopIteration:
+        break
 
-    descriptions = transaction_descriptions(transactions)
-    for _ in range(5):
-        print(next(descriptions))
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
 
-    for card_number in card_number_generator(1, 5):
-        print(card_number)
+for card_number in card_number_generator(1, 5):
+    print(card_number)
 
