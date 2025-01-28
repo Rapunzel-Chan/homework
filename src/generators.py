@@ -7,14 +7,9 @@ def filter_by_currency(transactions: list, currency: str) -> Iterator:
     который поочередно выдает транзакции,
     где валюта операции соответствует заданной
     """
-    if [] == transactions:
-        raise ValueError('Список пуст')
-    if currency != 'USD' and currency != 'RUB':
-        raise ValueError('Нет словаря для такой валюты')
-    else:
-        for transaction in transactions:
-            if transaction['operationAmount']['currency']['code'] == currency:
-                yield transaction
+    for transaction in transactions:
+        if transaction.get('operationAmount', {}).get('currency', {}).get('code') == currency:
+            yield transaction
 
 
 def transaction_descriptions(transactions: list) -> Iterator:
@@ -26,15 +21,13 @@ def transaction_descriptions(transactions: list) -> Iterator:
 
 def card_number_generator(start: int, stop: int) -> Iterator:
     """Функция выдает номера банковских карт в формате XXXX XXXX XXXX XXXX"""
+    if 0 > start or stop < 0:
+        raise ValueError('Неверный диапазон')
     for num in range(start, stop + 1):
-        nulls = 16
-        nulls -= len(str(num))
-        result = "0" * nulls + str(num)
-        if len(result) == 16 and '0000000000000001' <= result <= '9999999999999999':
+        result = str(num).zfill(16)
+        if '0000000000000001' <= result <= '9999999999999999':
             card_number = f"{result[:-17]}{result[-17:-12]} {result[-12:-8]} {result[-8:-4]} {result[-4:]}"
             yield card_number
-        else:
-            raise ValueError('Номер карты вне диапазона')
 
 
 transactions = ([

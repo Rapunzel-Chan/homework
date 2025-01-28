@@ -77,12 +77,12 @@ def test_filter_by_currency(transactions):
 
 
 def test_filter_by_currency_missing(transactions):
-    with pytest.raises(ValueError):
+    with pytest.raises(StopIteration):
         next(filter_by_currency(transactions, 'EUR'))
 
 
 def test_filter_by_currency_empty(transactions):
-    with pytest.raises(ValueError):
+    with pytest.raises(StopIteration):
         next(filter_by_currency([], 'USD'))
 
 
@@ -93,9 +93,16 @@ def test_transaction_descriptions(transactions):
 
 
 def test_card_number_generator():
-    assert next(card_number_generator(1, 5))
+    expected_result = [
+            '0000 0000 0000 0001',
+            '0000 0000 0000 0002',
+            '0000 0000 0000 0003',
+            '0000 0000 0000 0004',
+            '0000 0000 0000 0005'
+        ]
+    assert list(card_number_generator(1, 5)) == expected_result
 
 
 def test_card_number_generator_out_range():
-    with pytest.raises(TypeError):
-        assert next(card_number_generator('abg', 'a'))
+    with pytest.raises(ValueError):
+        assert next(card_number_generator(1, -1))
