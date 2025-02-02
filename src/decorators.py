@@ -1,10 +1,10 @@
-from functools import wraps
 from datetime import datetime
-from typing import Callable, Any
+from functools import wraps
+from typing import Any, Callable
 
 
 def log(filename='') -> Callable[..., Any]:
-    '''Декоратор, логирующий работу функции и ее результат в файл или в консоль'''
+    """Декоратор, логирующий работу функции и ее результат в файл или в консоль"""
     def inner(func):
         @wraps(func)
         def wrapper(*args):
@@ -26,15 +26,20 @@ def log(filename='') -> Callable[..., Any]:
         return wrapper
     return inner
 
+
 @log(filename="mylog.txt")
 def my_function(x, y):
     return x + y
 
+
 my_function(1, 2)
-#my_function(4, 'абв')
-#
-# @log()
-# def my_function_without_filename(x, y):
-#     return x + y
-#
-# my_function_without_filename(5, 8)
+
+# my_function(4, 'абв')
+
+
+@log()
+def my_function_without_filename(x, y):
+    return x + y
+
+
+my_function_without_filename(5, 8)
