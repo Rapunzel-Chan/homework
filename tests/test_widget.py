@@ -12,7 +12,7 @@ def test_get_mask_account_card(card_account, expected):
     assert get_mask_account_card(card_account) == expected
 
 
-def test_get_mask_account_card_wrong_card_number()-> None:
+def test_get_mask_account_card_wrong_card_number() -> None:
     with pytest.raises(ValueError):
         get_mask_account_card('MasterCard 1787763705147')
 
@@ -38,4 +38,9 @@ def test_get_data():
 
 def test_get_data_wrong():
     with pytest.raises(ValueError):
-        get_data('')
+        get_data(' ')
+
+
+def test_get_data_wrong_date_type_not_digit():
+    with pytest.raises(ValueError):
+        get_data('abcd-03-11T02:26:18.671407')

@@ -12,11 +12,8 @@ def filter_by_state(bank_operations: list, state: str) -> list:
 
 def sort_by_date(bank_operations: list, reverse: bool = True) -> list:
     """Функция возвращает список словарей, отсортированных по дате"""
-    filtered_id_date = sorted(bank_operations, key=lambda operation: operation["date"], reverse=reverse)
-    for d_operation in bank_operations:
-        date_length = d_operation['date']
-        if len(date_length) == 26:
-            continue
-        else:
+    for operation in bank_operations:
+        if len(operation["date"]) != 26:
             raise ValueError("Неверный формат даты")
+    filtered_id_date = sorted(bank_operations, key=lambda operation: operation["date"], reverse=reverse)
     return filtered_id_date
