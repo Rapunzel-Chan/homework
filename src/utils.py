@@ -1,13 +1,17 @@
 import json
-import requests
 import os
+
+import requests
+
 from config import DATA_DIR
 
 file_name = 'operations.json'
 file_path = os.path.join(DATA_DIR, file_name)
 file_url = 'https://drive.google.com/uc?export=download&id=1C0bUdTxUhck-7BoqXSR1wIEp33BH5YXy'
 
-def create_and_read_transactions_file(file_path):
+
+def create_and_read_transactions_file(file_path: str) -> list:
+    """Функция возвращает список словарей банковских операций, загруженных из внешнего хранилища"""
     try:
         response = requests.get(file_url)
         response.raise_for_status()
@@ -21,9 +25,9 @@ def create_and_read_transactions_file(file_path):
             return []
     except (json.JSONDecodeError, ValueError):
         return []
+    except requests.exceptions.HTTPError:
+        print("HTTP Error. Please check the URL.")
 
 
-
-if __name__ == '__main__':
-    print(create_and_read_transactions_file(file_path))
-
+# if __name__ == '__main__':
+#     print(create_and_read_transactions_file(file_path))

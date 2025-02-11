@@ -1,5 +1,10 @@
-from unittest.mock import Mock, patch
+from unittest.mock import patch
+
 from src.external_api import calculate_currency_exchange
+
+
+def test_calculate_currency_exchange(transactions):
+    assert calculate_currency_exchange(transactions)
 
 
 @patch('requests.get')
@@ -10,4 +15,3 @@ def test_calculate_currency_exchange_with_error(mock_get):
     result = calculate_currency_exchange(transactions)
     expected_value = float(123) * 5
     assert result == expected_value
-

@@ -16,3 +16,33 @@
 2025-02-02 21:09:09.346330, 2025-02-02 21:09:09.346330, my_function ok
 2025-02-02 21:09:09.530993, 2025-02-02 21:09:09.530993, my_function ok
 2025-02-02 21:09:09.539482, 2025-02-02 21:09:09.539482, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 18:32:49.950624, 2025-02-11 18:32:49.950624, my_function ok
+2025-02-11 18:32:50.716483, 2025-02-11 18:32:50.716483, my_function ok
+2025-02-11 18:32:50.716483, 2025-02-11 18:32:50.716483, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 18:39:16.151116, 2025-02-11 18:39:16.151116, my_function ok
+2025-02-11 18:39:16.900411, 2025-02-11 18:39:16.900411, my_function ok
+2025-02-11 18:39:16.900411, 2025-02-11 18:39:16.900411, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 18:43:31.552238, 2025-02-11 18:43:31.552238, my_function ok
+2025-02-11 18:43:32.421865, 2025-02-11 18:43:32.421865, my_function ok
+2025-02-11 18:43:32.421865, 2025-02-11 18:43:32.421865, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 18:44:56.643562, 2025-02-11 18:44:56.643562, my_function ok
+2025-02-11 18:44:57.618991, 2025-02-11 18:44:57.618991, my_function ok
+2025-02-11 18:44:57.634617, 2025-02-11 18:44:57.634617, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 18:47:29.852052, 2025-02-11 18:47:29.852052, my_function ok
+2025-02-11 18:47:30.624808, 2025-02-11 18:47:30.624808, my_function ok
+2025-02-11 18:47:30.624808, 2025-02-11 18:47:30.624808, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 19:01:17.119255, 2025-02-11 19:01:17.119255, my_function ok
+2025-02-11 19:01:18.001261, 2025-02-11 19:01:18.001261, my_function ok
+2025-02-11 19:01:18.001261, 2025-02-11 19:01:18.001261, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 19:03:08.094934, 2025-02-11 19:03:08.094934, my_function ok
+2025-02-11 19:03:08.801536, 2025-02-11 19:03:08.801536, my_function ok
+2025-02-11 19:03:08.801536, 2025-02-11 19:03:08.801536, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 19:29:26.583711, 2025-02-11 19:29:26.583711, my_function ok
+2025-02-11 19:29:28.017364, 2025-02-11 19:29:28.017364, my_function ok
+2025-02-11 19:29:28.033011, 2025-02-11 19:29:28.033011, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 19:32:27.151873, 2025-02-11 19:32:27.151873, my_function ok
+2025-02-11 19:32:28.563515, 2025-02-11 19:32:28.563515, my_function ok
+2025-02-11 19:32:28.563515, 2025-02-11 19:32:28.563515, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')
+2025-02-11 19:35:46.520498, 2025-02-11 19:35:46.520498, my_function ok
+2025-02-11 19:35:48.079120, 2025-02-11 19:35:48.079120, my_function ok
+2025-02-11 19:35:48.079120, 2025-02-11 19:35:48.079120, my_function error: (unsupported operand type(s) for +: 'int' and 'str'). Inputs: (1, 'абв')

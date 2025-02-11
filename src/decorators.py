@@ -3,11 +3,11 @@ from functools import wraps
 from typing import Any, Callable
 
 
-def log(filename='') -> Callable[..., Any]:
+def log(filename: str = '') -> Callable[..., Any]:
     """Декоратор, логирующий работу функции и ее результат в файл или в консоль"""
-    def inner(func):
+    def inner(func: Any) -> Any:
         @wraps(func)
-        def wrapper(*args):
+        def wrapper(*args: Any) -> Any:
             start = datetime.now()
             try:
                 result = func(*args)
@@ -28,7 +28,7 @@ def log(filename='') -> Callable[..., Any]:
 
 
 @log(filename="mylog.txt")
-def my_function(x, y):
+def my_function(x: int, y: int) -> int:
     return x + y
 
 
@@ -38,7 +38,7 @@ my_function(1, 2)
 
 
 @log()
-def my_function_without_filename(x, y):
+def my_function_without_filename(x: int, y: int) -> int:
     return x + y
 
 
