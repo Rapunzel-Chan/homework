@@ -1,23 +1,18 @@
 import requests
 import os
-import json
 from dotenv import load_dotenv
 
 load_dotenv()
 
-url = "https://api.apilayer.com/exchangerates_data/latest?symbols=USD%2C%20EUR&base=RUB"
-payload = {}
-headers= {
-  "apikey": "API_KEY"
-}
-
-response = requests.request("GET", url, headers=headers, data = payload)
-status_code = response.status_code
-result = response.text
-
 
 def calculate_currency_exchange(transactions) -> float:
-    response = requests.get(url, headers={"apikey":"API_KEY"})
+    url = "https://api.apilayer.com/exchangerates_data/latest?symbols=USD,EUR&base=RUB"
+    headers = {
+        "apikey": os.getenv('API_KEY')
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        raise ValueError(f"Failed to get currency rates: {response.status_code} - {response.text}")
     data = response.json()
     usd_rate = data["rates"]["USD"]
     euro_rate = data["rates"]["EUR"]
@@ -28,42 +23,14 @@ def calculate_currency_exchange(transactions) -> float:
         amount = float(transaction['operationAmount']['amount'])
         currency_code = transaction['operationAmount']['currency']['code']
         if currency_code == 'USD':
-                total_usd_amount += amount * usd_rate
+            total_usd_amount += amount * usd_rate
         elif currency_code == 'EUR':
-                total_euro_amount += amount * euro_rate
+            total_euro_amount += amount * euro_rate
         elif currency_code == 'RUB':
-                total_rub_amount += amount
-
-    total_amount = total_usd_amount + total_euro_amount + total_rub_amount
+            total_rub_amount += amount
+    total_amount = round((total_usd_amount + total_euro_amount + total_rub_amount), 2)
     return total_amount
 
-
-
-
-
-
-
-#
-#
-#         return
-#
-#     return wrapper
-#
-#
-#
-#
-#     with open(output_file, 'w') as f:
-#         json.dump(filtered_transactions, f, indent=4)
-#
-#     return filtered_transactions
-#
-# def main():
-#     input_file = 'transactions.json'
-#     output_file = 'transactions_filtered.json'
-#     currency = 'USD'
-#
-#     filtered_transactions = filter_transactions_by_currency(input_file, output_file, currency)
-#     print(filtered_transactions)
 
 amount_with_rate = calculate_currency_exchange([
   {
@@ -122,4 +89,3 @@ amount_with_rate = calculate_currency_exchange([
         "code": "RUB"
       }}}])
 print(amount_with_rate)
-
