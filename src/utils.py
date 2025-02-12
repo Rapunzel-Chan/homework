@@ -1,11 +1,10 @@
 import json
 import os
-from logger import setup_logging
-
 
 import requests
 
 from config import DATA_DIR
+from logger import setup_logging
 
 utils_logger = setup_logging('utils')
 

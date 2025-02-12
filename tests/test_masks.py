@@ -1,4 +1,5 @@
 import pytest
+
 from src.masks import get_mask_account, get_mask_card_number
 
 
@@ -23,5 +24,3 @@ def test_get_mask_account():
 def test_get_mask_account_wrong_account_number():
     with pytest.raises(ValueError):
         get_mask_account(['Счет 736541084304305', 'Счет 7365 410 84301 35 85'])
-
-

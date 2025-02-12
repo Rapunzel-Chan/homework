@@ -28,11 +28,10 @@ def get_mask_account(account_number: str) -> str:
         masks_logger.info('Успех!')
         return f"Счет **{account_number[-4:]}"
 
-if __name__ == '__main__':
-    get_mask_account('Счет 11776614605963066702')
-    get_mask_account('Счет 11776614605962')
-    get_mask_card_number('Visa Platinum 1246377376343588')
-    get_mask_card_number('')
-    get_mask_card_number('124')
 
-
+# if __name__ == '__main__':
+#     get_mask_account('Счет 11776614605963066702')
+#     get_mask_account('Счет 11776614605962')
+#     get_mask_card_number('Visa Platinum 1246377376343588')
+#     get_mask_card_number('')
+#     get_mask_card_number('124')
