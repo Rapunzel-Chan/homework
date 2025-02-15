@@ -1,4 +1,4 @@
-from logger import setup_logging
+from src.logger import setup_logging
 
 masks_logger = setup_logging('masks')
 
@@ -7,14 +7,14 @@ def get_mask_card_number(card_number: str) -> str:
     """Функция маскирует номера банковской карты"""
     card_numbers = ''.join(num if num.isdigit() else '' for num in card_number)
     if len(card_numbers) == 16:
-        masks_logger.info('Удача!')
+        masks_logger.info('Номер карты успешно замаскирован!')
         return f"{card_number[:-17]}{card_number[-17:-12]} {card_number[-12:-10]}** **** {card_number[-4:]}"
     else:
         if len(card_numbers) == 0:
-            masks_logger.error('Пустой номер!')
+            masks_logger.error('Номер карты не указан!')
             raise ValueError("Вы не ввели номер карты")
         else:
-            masks_logger.error('Проверьте номер!')
+            masks_logger.error('Номер карты неверен!')
             raise ValueError("Неверный номер карты")
 
 
@@ -23,9 +23,9 @@ def get_mask_account(account_number: str) -> str:
     account_numbers = ''.join(num if num.isdigit() else '' for num in account_number)
     if len(account_numbers) != 20:
         masks_logger.error('Вы не ввели номер счета')
-        raise ValueError("Неверный номер счета")
+        raise ValueError("Wrong account number!")
     else:
-        masks_logger.info('Успех!')
+        masks_logger.info('Номер счета успешно замаскирован!')
         return f"Счет **{account_number[-4:]}"
 
 
