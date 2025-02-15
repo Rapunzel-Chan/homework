@@ -14,7 +14,7 @@ def test_get_mask_card_number_wrong_card_number():
 
 def test_get_mask_card_number_empty_card_number():
     with pytest.raises(ValueError):
-        get_mask_card_number(['', 'Maestro'])
+        get_mask_card_number('')
 
 
 def test_get_mask_account():
