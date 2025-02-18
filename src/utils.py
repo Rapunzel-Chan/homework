@@ -40,7 +40,7 @@ def create_and_read_transactions_file(file_path: str) -> list:
         utils_logger.error(f"TypeError: {e}")
         return []
 
-#
-# if __name__ == '__main__':
-#     print(create_and_read_transactions_file(file_path))
-#     print(create_and_read_transactions_file('123'))
+
+if __name__ == '__main__':
+    print(create_and_read_transactions_file(file_path))
+    #print(create_and_read_transactions_file('123'))
