@@ -21,7 +21,7 @@ def create_and_read_transactions_file(file_path: str) -> list:
             raise TypeError("The 'file_path' must be a string.")
         response = requests.get(file_url)
         response.raise_for_status()
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(file_path, 'w') as f:
             f.write(response.text)
         with open(file_path, 'r') as f:
             transactions = json.load(f)
@@ -41,6 +41,6 @@ def create_and_read_transactions_file(file_path: str) -> list:
         return []
 
 
-# if __name__ == '__main__':
-#     print(create_and_read_transactions_file(file_path))
-#     print(create_and_read_transactions_file(123))
+if __name__ == '__main__':
+    print(create_and_read_transactions_file(file_path))
+    #print(create_and_read_transactions_file('123'))

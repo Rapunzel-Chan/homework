@@ -1,10 +1,11 @@
 import logging
 import os
+from logging import Logger
 
 from config import LOG_DIR
 
 
-def setup_logging(logger_name: str):
+def setup_logging(logger_name: str) -> Logger:
     """Функция устанавливает общие настройки для логгеров"""
     os.makedirs(LOG_DIR, exist_ok=True)
     logger = logging.getLogger(logger_name)
