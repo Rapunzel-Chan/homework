@@ -1,39 +1,34 @@
 import os
-from src.file_reader import read_csv_transactions, read_xlsx_transactions
-from src.utils import create_and_read_transactions_file
-from config import DATA_DIR
-from src.processing import filter_by_state, sort_by_date
-from src.generators import filter_by_currency, transaction_descriptions
-from src.masks import get_mask_card_number, get_mask_account
 from collections import Counter
-from src.widget import get_mask_account_card
-from src.filter_sort_re import search_definite_transactions, search_category_transactions
 
-def main():
+from config import DATA_DIR
+from src.file_reader import read_csv_transactions, read_xlsx_transactions
+from src.filter_sort_re import search_definite_transactions
+from src.generators import filter_by_currency
+from src.processing import filter_by_state, sort_by_date
+from src.utils import create_and_read_transactions_file
+from src.widget import get_mask_account_card
+
+
+def main() -> None:
+    """Функция собирает всю функциональность проекта"""
     print('''Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n Выберите необходимый пункт меню:
           1. Получить информацию о транзакциях из JSON-файла\n
           2. Получить информацию о транзакциях из CSV-файла\n
           3. Получить информацию о транзакциях из XLSX-файла''')
-
     user_input = int(input())
     if user_input == 1:
         file_path = os.path.join(DATA_DIR, 'operations.json')
         filtered_transactions = create_and_read_transactions_file(file_path)
         print('Для обработки выбран JSON-файл.')
-        print(filtered_transactions)
-
-
     elif user_input == 2:
         file_path = os.path.join(DATA_DIR, 'transactions.csv')
         filtered_transactions = read_csv_transactions(file_path)
         print('Для обработки выбран CSV-файл.')
-
-
     elif user_input == 3:
         file_path = os.path.join(DATA_DIR, 'transactions_excel.xlsx')
         filtered_transactions = read_xlsx_transactions(file_path)
         print('Для обработки выбран XLSX-файл.')
-
     else:
         print('Некорректный выбор.')
         return
@@ -88,7 +83,8 @@ def main():
         print('Отфильтровать список транзакций по определенному слову в описании? Да/Нет')
         description_input = input().title()
         if description_input == 'Да':
-            filtered_transactions_description = list(search_definite_transactions(filtered_transactions_currency, 'Перевод организации'))
+            filtered_transactions_description = list(search_definite_transactions
+                                                     (filtered_transactions_currency, 'Перевод организации'))
             break
         elif description_input == 'Нет':
             filtered_transactions_description = filtered_transactions_currency
@@ -98,46 +94,46 @@ def main():
 
     print('Распечатываю итоговый список транзакций...')
 
-
-
-
     if not filtered_transactions_description:
         print('Не найдено ни одной транзакции, подходящей под ваши условия фильтрации')
     else:
-        formatted_transactions = []
-        for transaction in filtered_transactions_description:
-            date = transaction.get('date', 'Дата не указана')  # Provide default value if the field is missing
-            description = transaction.get('description', 'Описание не указано')
-            amount = transaction['operationAmount'].get('amount', 'Сумма не указана')
-            currency = transaction['operationAmount']['currency'].get('name', 'Валюта не указана')
-            from_account = get_mask_account_card(transaction.get('from', ''))
-            to_account = get_mask_account_card(transaction.get('to', ''))
-            formatted_output = f"{date} {description}\n{from_account} -> {to_account}\nСумма: {amount} {currency}\n"
-            formatted_transactions.append(formatted_output)
-        counted_and_filtered_transactions = Counter(transaction['id'] for transaction in filtered_transactions_description)
-        print(f'Всего банковских операций в выборке: {len(counted_and_filtered_transactions)}')
+        if user_input == 1:
+            formatted_transactions = []
+            for transaction in filtered_transactions_description:
+                date = transaction.get('date', 'Дата не указана')
+                description = transaction.get('description', 'Описание не указано')
+                amount = transaction['operationAmount'].get('amount', 'Сумма не указана')
+                currency = transaction['operationAmount']['currency'].get('name', 'Валюта не указана')
+                from_account = get_mask_account_card(transaction.get('from', ''))
+                to_account = get_mask_account_card(transaction.get('to', ''))
+                formatted_output = (f'{date} {description}\n{from_account} -> {to_account}\nСумма: '
+                                    f'{amount} {currency}\n')
+                formatted_transactions.append(formatted_output)
+            counted_and_filtered_transactions = Counter(transaction['id']
+                                                        for transaction in filtered_transactions_description)
+            print(f'Всего банковских операций в выборке: {len(counted_and_filtered_transactions)}')
+        else:
+            formatted_transactions = []
+            for transaction in filtered_transactions_description:
+                date = transaction.get('date', 'Дата не указана')
+                description = transaction.get('description', 'Описание не указано')
+                amount = transaction.get('amount', 'Сумма не указана')
+                from_account = get_mask_account_card(transaction.get('from', ''))
+                to_account = get_mask_account_card(transaction.get('to', ''))
+                if user_input == 1:
+                    currency = transaction.get('name', 'Валюта не указана')
+                else:
+                    currency = transaction.get('currency_code', 'Валюта не указана')
+                formatted_output = (f'{date} {description}\n{from_account} -> '
+                                    f'{to_account}\nСумма: {amount} {currency}\n')
+                formatted_transactions.append(formatted_output)
+            counted_and_filtered_transactions = Counter(transaction['id'] for transaction
+                                                        in filtered_transactions_description)
+            print(f'Всего банковских операций в выборке: {len(counted_and_filtered_transactions)}')
 
         for transaction in formatted_transactions:
             print(transaction)
 
-if __name__ == "__main__":
-    main()
-#
-# 08.12.2019 Открытие вклада
-# Счет **4321
-# Сумма: 40542 руб.
-#
-# 12.11.2019 Перевод с карты на карту
-# MasterCard 7771 27** **** 3727 -> Visa Platinum 1293 38** **** 9203
-# Сумма: 130 USD
-#
-# 18.07.2018 Перевод организации
-# Visa Platinum 7492 65** **** 7202 -> Счет **0034
-# Сумма: 8390 руб.
-#
-# 03.06.2018 Перевод со счета на счет
-# Счет **2935 -> Счет **4321
-# Сумма: 8200 EUR
-#
 
-
+# if __name__ == "__main__":
+#     main()

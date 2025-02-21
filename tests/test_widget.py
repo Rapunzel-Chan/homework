@@ -8,7 +8,7 @@ from src.widget import get_data, get_mask_account_card
                                                     ('Счет 35383033474447895560', 'Счет **5560'),
                                                     ('Счет 64686473678894779589', 'Счет **9589')]
                          )
-def test_get_mask_account_card(card_account, expected):
+def test_get_mask_account_card(card_account, expected) -> None:
     assert get_mask_account_card(card_account) == expected
 
 
@@ -17,30 +17,30 @@ def test_get_mask_account_card_wrong_card_number() -> None:
         get_mask_account_card('MasterCard 1787763705147')
 
 
-def test_get_mask_account_card_empty_card_number():
+def test_get_mask_account_card_empty_card_number() -> None:
     with pytest.raises(ValueError):
         get_mask_account_card('')
 
 
-def test_get_mask_account_card_wrong_account_number():
+def test_get_mask_account_card_wrong_account_number() -> None:
     with pytest.raises(ValueError):
         get_mask_account_card('Счет 646864736788989')
 
 
-def test_get_mask_account_card_empty_account_number():
+def test_get_mask_account_card_empty_account_number() -> None:
     with pytest.raises(ValueError):
         get_mask_account_card('')
 
 
-def test_get_data():
+def test_get_data() -> None:
     assert get_data('2024-03-11T02:26:18.671407') == '11.03.2024'
 
 
-def test_get_data_wrong():
+def test_get_data_wrong() -> None:
     with pytest.raises(ValueError):
         get_data(' ')
 
 
-def test_get_data_wrong_date_type_not_digit():
+def test_get_data_wrong_date_type_not_digit() -> None:
     with pytest.raises(ValueError):
         get_data('abcd-03-11T02:26:18.671407')
