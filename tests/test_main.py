@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from src.main import main
+from main import main
 
 mock_transactions = [
     {"id": 1, "date": "2025-02-21", "description": "Payment", "operationAmount":
@@ -28,4 +28,3 @@ def test_main_invalid_file_input(mock_file_processing):
         with patch('builtins.print') as mock_print:
             main()
             mock_print.assert_called_with("Некорректный выбор.")
-
