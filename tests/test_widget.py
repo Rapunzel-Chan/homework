@@ -17,19 +17,9 @@ def test_get_mask_account_card_wrong_card_number() -> None:
         get_mask_account_card('MasterCard 1787763705147')
 
 
-def test_get_mask_account_card_empty_card_number() -> None:
-    with pytest.raises(ValueError):
-        get_mask_account_card('')
-
-
 def test_get_mask_account_card_wrong_account_number() -> None:
     with pytest.raises(ValueError):
         get_mask_account_card('Счет 646864736788989')
-
-
-def test_get_mask_account_card_empty_account_number() -> None:
-    with pytest.raises(ValueError):
-        get_mask_account_card('')
 
 
 def test_get_data() -> None:

@@ -3,7 +3,6 @@ from collections import Counter
 
 from config import DATA_DIR
 from src.file_reader import read_csv_transactions, read_xlsx_transactions
-from src.filter_sort_re import search_definite_transactions
 from src.generators import filter_by_currency
 from src.processing import filter_by_state, sort_by_date
 from src.utils import create_and_read_transactions_file
@@ -83,23 +82,22 @@ def main() -> None:
         print('Отфильтровать список транзакций по определенному слову в описании? Да/Нет')
         description_input = input().title()
         if description_input == 'Да':
-            filtered_transactions_description = list(search_definite_transactions
-                                                     (filtered_transactions_currency, 'Перевод организации'))
+            sorted_transactions_description = sorted(filtered_transactions_currency, key=lambda x: x['description'])
             break
         elif description_input == 'Нет':
-            filtered_transactions_description = filtered_transactions_currency
+            sorted_transactions_description = filtered_transactions_currency
             break
         else:
             print('Некорректный ввод.')
 
     print('Распечатываю итоговый список транзакций...')
 
-    if not filtered_transactions_description:
+    if not sorted_transactions_description:
         print('Не найдено ни одной транзакции, подходящей под ваши условия фильтрации')
     else:
         if user_input == 1:
             formatted_transactions = []
-            for transaction in filtered_transactions_description:
+            for transaction in sorted_transactions_description:
                 date = transaction.get('date', 'Дата не указана')
                 description = transaction.get('description', 'Описание не указано')
                 amount = transaction['operationAmount'].get('amount', 'Сумма не указана')
@@ -109,12 +107,13 @@ def main() -> None:
                 formatted_output = (f'{date} {description}\n{from_account} -> {to_account}\nСумма: '
                                     f'{amount} {currency}\n')
                 formatted_transactions.append(formatted_output)
-            counted_and_filtered_transactions = Counter(transaction['id']
-                                                        for transaction in filtered_transactions_description)
+            counted_and_filtered_transactions = Counter(formatted_transactions)
             print(f'Всего банковских операций в выборке: {len(counted_and_filtered_transactions)}')
         else:
             formatted_transactions = []
-            for transaction in filtered_transactions_description:
+            print(sorted_transactions_description)
+            for transaction in sorted_transactions_description:
+                print(transaction)
                 date = transaction.get('date', 'Дата не указана')
                 description = transaction.get('description', 'Описание не указано')
                 amount = transaction.get('amount', 'Сумма не указана')
@@ -127,13 +126,12 @@ def main() -> None:
                 formatted_output = (f'{date} {description}\n{from_account} -> '
                                     f'{to_account}\nСумма: {amount} {currency}\n')
                 formatted_transactions.append(formatted_output)
-            counted_and_filtered_transactions = Counter(transaction['id'] for transaction
-                                                        in filtered_transactions_description)
+            counted_and_filtered_transactions = Counter(formatted_transactions)
             print(f'Всего банковских операций в выборке: {len(counted_and_filtered_transactions)}')
 
         for transaction in formatted_transactions:
             print(transaction)
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

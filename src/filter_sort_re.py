@@ -21,16 +21,15 @@ def search_definite_transactions(transactions: list, searching_str: str) -> list
         return founded_transactions
 
 
-def search_category_transactions(transactions: list, category_dict: dict) -> dict:
+def search_category_transactions(transactions: list, category_list: list) -> dict:
     """Функция сортирует банковские операции по графе описания и подсчитывает их количество"""
-    if not category_dict:
+    if not category_list:
         raise ValueError('Фильтр не задан')
-    else:
-        categorizied_transactions = []
-        for transaction in transactions:
-            description = transaction.get('description')
-            if description and description in category_dict.values():
-                categorizied_transactions.append(description)
+    categorizied_transactions = []
+    for transaction in transactions:
+        description = transaction.get('description')
+        if description and description in category_list:
+            categorizied_transactions.append(description)
     counted_categories = Counter(categorizied_transactions)
     return counted_categories
 
@@ -425,6 +424,6 @@ b_transactions = [{'id': 441945886, 'state': 'EXECUTED', 'date': '2019-08-26T10:
                    'operationAmount': {'amount': '97853.86', 'currency': {'name': 'руб.', 'code': 'RUB'}},
                    'description': 'Перевод с карты на счет', 'from': 'Maestro 1308795367077170',
                    'to': 'Счет 96527012349577388612'}]
-# if __name__ == '__main__':
-#     print(search_definite_transactions(b_transactions, 'Перевод организации'))
-#     print(search_category_transactions(b_transactions, {1: 'Перевод с карты на счет', 2: 'Перевод организации'}))
+if __name__ == '__main__':
+    print(search_definite_transactions(b_transactions, 'Перевод организации'))
+    print(search_category_transactions(b_transactions, ['Перевод с карты на счет', 'Перевод организации']))

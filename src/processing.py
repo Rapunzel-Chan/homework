@@ -1,14 +1,9 @@
 def filter_by_state(bank_operations: list, state: str) -> list:
     """Функция возвращает список словарей, отсортированных по заданному параметру"""
-    filtered_id_state = []
-    for operation in bank_operations:
-        if operation.get('state') == state:
-            filtered_id_state.append(operation)
-    if filtered_id_state:
-        return filtered_id_state
-    else:
+    filtered_operations = [operation for operation in bank_operations if operation.get('state') == state]
+    if not filtered_operations:
         raise KeyError('Словарей для такого статуса нет')
-        return []
+    return filtered_operations
 
 
 def sort_by_date(bank_operations: list, reverse: bool = True) -> list:

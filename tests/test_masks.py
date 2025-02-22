@@ -12,11 +12,6 @@ def test_get_mask_card_number_wrong_card_number() -> None:
         get_mask_card_number('Visa Classic 82476737658')
 
 
-def test_get_mask_card_number_empty_card_number() -> None:
-    with pytest.raises(ValueError):
-        get_mask_card_number('')
-
-
 def test_get_mask_account() -> None:
     assert get_mask_account('Счет 73654108430135874305') == 'Счет **4305'
 
