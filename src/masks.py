@@ -11,8 +11,7 @@ def get_mask_card_number(card_number: str) -> str:
         return f"{card_number[:-17]}{card_number[-17:-12]} {card_number[-12:-10]}** **** {card_number[-4:]}"
     else:
         if len(card_numbers) == 0:
-            masks_logger.error('Номер карты не указан!')
-            raise ValueError("Вы не ввели номер карты")
+            return ''
         else:
             masks_logger.error('Номер карты неверен!')
             raise ValueError("Неверный номер карты")
@@ -29,9 +28,9 @@ def get_mask_account(account_number: str) -> str:
         return f"Счет **{account_number[-4:]}"
 
 
-# if __name__ == '__main__':
-#     get_mask_account('Счет 11776614605963066702')
-#     get_mask_account('Счет 11776614605962')
-#     get_mask_card_number('Visa Platinum 1246377376343588')
-#     get_mask_card_number('')
-#     get_mask_card_number('124')
+if __name__ == '__main__':
+    get_mask_account('Счет 11776614605963066702')
+    get_mask_account('Счет 11776614605962')
+    get_mask_card_number('Visa Platinum 1246377376343588')
+    get_mask_card_number('')
+    get_mask_card_number('124')

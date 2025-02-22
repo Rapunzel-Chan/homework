@@ -21,9 +21,9 @@ def create_and_read_transactions_file(file_path: str) -> list:
             raise TypeError("The 'file_path' must be a string.")
         response = requests.get(file_url)
         response.raise_for_status()
-        with open(file_path, 'w') as f:
+        with open(file_path, 'w', encoding='utf-8') as f:
             f.write(response.text)
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             transactions = json.load(f)
         if len(transactions) > 0 and isinstance(transactions, list):
             utils_logger.info('Список транзакций успешно загружен!')
@@ -36,11 +36,9 @@ def create_and_read_transactions_file(file_path: str) -> list:
     except requests.exceptions.HTTPError:
         utils_logger.error('Wrong url!')
         print("HTTP Error. Please check the URL.")
-    except TypeError as e:
-        utils_logger.error(f"TypeError: {e}")
         return []
 
 
-if __name__ == '__main__':
-    print(create_and_read_transactions_file(file_path))
-    #print(create_and_read_transactions_file('123'))
+# if __name__ == '__main__':
+#     print(create_and_read_transactions_file(file_path))
+#     #print(create_and_read_transactions_file('123'))

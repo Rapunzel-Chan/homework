@@ -3,7 +3,7 @@ import pytest
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
-def test_filter_by_currency(transactions):
+def test_filter_by_currency(transactions) -> None:
     iter_usd = filter_by_currency(transactions, "USD")
     iter_rub = filter_by_currency(transactions, "RUB")
     assert next(iter_usd) == {"id": 939719570, "state": "EXECUTED",
@@ -76,23 +76,23 @@ def test_filter_by_currency(transactions):
     }
 
 
-def test_filter_by_currency_missing(transactions):
+def test_filter_by_currency_missing(transactions) -> None:
     with pytest.raises(StopIteration):
         next(filter_by_currency(transactions, 'EUR'))
 
 
-def test_filter_by_currency_empty(transactions):
+def test_filter_by_currency_empty(transactions) -> None:
     with pytest.raises(StopIteration):
         next(filter_by_currency([], 'USD'))
 
 
-def test_transaction_descriptions(transactions):
+def test_transaction_descriptions(transactions) -> None:
     iter_description = transaction_descriptions(transactions)
     assert next(iter_description) == "Перевод организации"
     assert next(iter_description) == "Перевод со счета на счет"
 
 
-def test_card_number_generator():
+def test_card_number_generator() -> None:
     expected_result = [
             '0000 0000 0000 0001',
             '0000 0000 0000 0002',
@@ -103,6 +103,6 @@ def test_card_number_generator():
     assert list(card_number_generator(1, 5)) == expected_result
 
 
-def test_card_number_generator_out_range():
+def test_card_number_generator_out_range() -> None:
     with pytest.raises(ValueError):
         assert next(card_number_generator(1, -1))
